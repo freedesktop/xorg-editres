@@ -23,22 +23,17 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
  */
+/* $XFree86: xc/programs/editres/actions.c,v 1.6 2001/12/14 20:00:42 dawes Exp $ */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <X11/Intrinsic.h>
 #include <X11/Xutil.h>
 
 #include <X11/Xaw/Cardinals.h>	
+#include <X11/Xmu/CharSet.h>
 
 #include "editresP.h"
-
-/*
- * External Functions.
- */
-
-extern void SetMessage(), _TreeSelect(), _TreeSelectNode(), _FindWidget();
-extern void _TreeActivateNode(), _TreeRelabel(), _TreeRelabelNode();
-extern void PrepareToLayoutTree(), LayoutTree(), _PopdownFileDialog();
 
 /*
  * Private data.
@@ -68,8 +63,21 @@ static struct  ActionValues label_values[] = {
     { "toggle", (int) ToggleLabel }
 };
 
-static WNode * FindTreeNodeFromWidget();
-static Boolean CheckAndFindEntry();
+static void EnableGetVal ( Widget w, XEvent *event, 
+			   String *params, Cardinal * num_params );
+static void SelectAction ( Widget w, XEvent *event, 
+			   String *params, Cardinal *num_params );
+static void RelabelAction ( Widget w, XEvent *event, 
+			    String *params, Cardinal *num_params );
+static void PopdownFileDialogAction ( Widget w, XEvent *event, 
+				      String *params, Cardinal *num_params );
+static void ActionQuit ( Widget w, XEvent *event, 
+			 String *params, Cardinal *num_params );
+static WNode * FindTreeNodeFromWidget ( Widget w );
+static Boolean CheckAndFindEntry ( String action_name, 
+				   String * params, Cardinal num_params, 
+				   struct ActionValues * table, 
+				   Cardinal num_table, int * type );
 
 /*	Function Name: EnableGetVal
  *	Description: sets a global variable to notify the Notify action
@@ -254,8 +262,6 @@ Cardinal * num_params;
  *	Arguments: app_con - the application context.
  *	Returns: none.
  */
-
-extern void ModifySVEntry();
 
 static XtActionsRec actions[] = {
   {"EnableGetVal",      EnableGetVal},

@@ -25,6 +25,7 @@ in this Software without prior written authorization from The Open Group.
  *
  * Author:  Chris D. Peterson, MIT X Consortium
  */
+/* $XFree86: xc/programs/editres/setvalues.c,v 1.5 2001/12/14 20:00:43 dawes Exp $ */
 
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>
@@ -37,9 +38,6 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/Xfuncs.h>
 #include <X11/Xos.h>
 #include "editresP.h"
-
-extern WNode * FindNode();
-extern void AddString();
 
 #define RESOURCE_NAME ("name")
 #define RESOURCE_CLASS ("Class")

@@ -25,14 +25,13 @@ in this Software without prior written authorization from The Open Group.
  *
  * Author:  Chris D. Peterson, MIT X Consortium
  */
+/* $XFree86: xc/programs/editres/svpopup.c,v 1.6 2001/12/14 20:00:43 dawes Exp $ */
 
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>	/* Get standard string definations. */
 #include <X11/Xatom.h>
 #include <X11/cursorfont.h>
 #include <X11/Shell.h>
-
-#include "editresP.h"
 
 #include <X11/Xaw/AsciiText.h>
 #include <X11/Xaw/Cardinals.h>	
@@ -46,11 +45,12 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/extensions/XKBbells.h>
 #endif
 
-extern void SetMessage(), SetCommand(), InsertWidgetFromNode();
-extern void GetAllStrings(), PopupCentered();
+#include "editresP.h"
 
-static void _SetField(), CreateSetValuesPopup();
-static void DoSetValues(), CancelSetValues();
+static void _SetField ( Widget new, Widget old );
+static void CreateSetValuesPopup ( Widget parent, ScreenData * scr_data );
+static void DoSetValues ( Widget w, XtPointer junk, XtPointer garbage );
+static void CancelSetValues ( Widget w, XtPointer junk, XtPointer garbage );
 
 /*	Function Name: PopupSetValues
  *	Description: This function pops up the setvalues dialog
@@ -163,7 +163,7 @@ Widget new, old;
     Pixel new_border, old_border, old_bg;
     
     if (!XtIsSensitive(new)) {
-#if XKB
+#ifdef XKB
 	/* Don't set field to an inactive Widget. */
 	XkbStdBell(XtDisplay(old), XtWindow(new), 0, XkbBI_InvalidLocation); 
 #else

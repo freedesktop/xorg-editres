@@ -23,6 +23,7 @@ Except as contained in this notice, the name of The Open Group shall not be
 used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
  */
+/* $XFree86: xc/programs/editres/utils.c,v 1.6 2001/12/14 20:00:43 dawes Exp $ */
 
 #include <X11/Intrinsic.h>
 #include <X11/Xutil.h>
@@ -34,17 +35,20 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/Xaw/Dialog.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <X11/Xmu/Error.h>
 
 #include "editresP.h"
 
-static WidgetResources * ParseResources();
-static int CompareResourceEntries();
-static void FreeResources(), AddResource();
-static WNode * FindWidgetFromWindowGivenNode();
+static WNode * FindWidgetFromWindowGivenNode ( WNode * node, Window win );
+static WidgetResources * ParseResources ( GetResourcesInfo * info, 
+					  char **error );
+static int CompareResourceEntries ( const void *e1, 
+				    const void *e2 );
+static void AddResource ( ResourceInfo * res_info, 
+			  WidgetResourceInfo * resource );
+static void FreeResources ( WidgetResources * resources );
 
-void CreateResourceBox();
-
-extern void PopupCentered(), PerformTreeToFileDump();
 
 /*	Function Name: SetMessage(w, str)
  *	Description: shows the message to the user.
@@ -75,9 +79,7 @@ char * str;
  */
 
 void
-GetAllStrings(in, sep, out, num)
-char *in, sep, ***out;
-int * num;
+GetAllStrings(char *in, char sep, char ***out, int *num)
 {
     int size, i;
     char * ptr;
@@ -272,7 +274,7 @@ void
 _DumpTreeToFile(w, tree_ptr, filename)
 Widget w;
 XtPointer tree_ptr;
-char * filename;
+XtPointer filename;
 {
     TreeInfo * tree_info = (TreeInfo *) tree_ptr;
     FILE * fp; 
@@ -283,10 +285,10 @@ char * filename;
 	return;
     }
 
-    if ( (fp = fopen(filename, "w")) == NULL ) {
+    if ( (fp = fopen((char *)filename, "w")) == NULL ) {
 	char buf[BUFSIZ];
 
-	sprintf(buf, res_labels[24], filename);
+	sprintf(buf, res_labels[24], (char *)filename);
 	SetMessage(global_screen_data.info_label, buf);
 	return;
     }
@@ -318,7 +320,7 @@ char * filename;
 static XContext file_dialog_context = None;
 
 typedef struct _FileDialogInfo {
-    void (*func)();
+    XtCallbackProc func;
     XtPointer data;
 } FileDialogInfo;
 
@@ -326,14 +328,13 @@ void
 _PopupFileDialog(w, str, default_value, func, data)
 Widget w;
 String str, default_value;
-void (*func)();
+XtCallbackProc func;
 XtPointer data;
 {
     FileDialogInfo * file_info;
     Widget shell, dialog;
     Arg args[2];
     Cardinal num_args;
-    void _PopdownFileDialog();
 
     if (file_dialog_context == None)
 	file_dialog_context = XUniqueContext();
@@ -578,7 +579,6 @@ CreateResourceBox(node, errors)
 WNode * node;
 char ** errors;
 {
-    void CreateResourceBoxWidgets();
     WidgetResources * resources = node->resources;
     char ** names, ** cons_names;
     int i;
@@ -695,9 +695,10 @@ char **error;
 
 static int 
 CompareResourceEntries(e1, e2) 
-WidgetResourceInfo *e1, *e2;
+const void *e1, *e2;
 {
-    return (strcmp(e1->name, e2->name));
+    return (strcmp(((WidgetResourceInfo *)e1)->name, 
+		   ((WidgetResourceInfo *)e2)->name));
 }
 
 /*	Function Name: AddResource
@@ -818,7 +819,7 @@ char * ptr;
 void
 ExecuteOverAllNodes(top_node, func, data)
 WNode * top_node;
-void (*func)();
+void (*func)(WNode *, XtPointer);
 XtPointer data;
 {
     int i;
