@@ -25,7 +25,7 @@ in this Software without prior written authorization from The Open Group.
  *
  * Author:  Chris D. Peterson, MIT X Consortium
  */
-/* $XFree86: xc/programs/editres/geometry.c,v 1.5 2001/12/14 20:00:43 dawes Exp $ */
+/* $XFree86$ */
 
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>
