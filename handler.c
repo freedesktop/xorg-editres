@@ -24,6 +24,8 @@ used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
  */
 
+/* $XFree86: xc/programs/editres/handler.c,v 1.7 2001/12/14 20:00:43 dawes Exp $ */
+
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>
 
@@ -35,27 +37,21 @@ in this Software without prior written authorization from The Open Group.
 #include <X11/Xos.h>		/* for W_OK def */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "editresP.h"
 
 /* 
- * Function Definitions.
+ * Local function definitions.
  */
-
-extern void SetCommand(), PopupSetValues(), SetAndCenterTreeNode();
-extern void _TreeSelect(), _TreeRelabel(), _TreeActivate(), SetMessage();
-extern void _FlashActiveWidgets(), _DumpTreeToFile(), _PopupFileDialog();
-extern void AddString(), CreateResourceBox(), ExecuteOverAllNodes();
-extern void GetNamesAndClasses(), TreeToggle(), InsertWidgetFromNode();
-extern Boolean CheckDatabase();
-extern XrmQuarkList Quarkify();
-extern char *GetResourceValueForSetValues();
-
-void SetResourceString(), ActivateResourceWidgets();
-void ActivateWidgetsAndSetResourceString();
-static void SetOnlyMatchingWidgets();
-static void CreateSetValuesCommand();
-static void ObtainResource();
+static char * GetResourceName ( ResourceBoxInfo * res_box );
+static void _AppendResourceString ( Widget w, XtPointer res_box_ptr, 
+				    XtPointer filename_ptr );
+static void _SetResourcesFile ( Widget w, XtPointer junk, 
+				XtPointer filename_ptr );
+static void ObtainResource ( XtPointer node_ptr );
+static void CreateSetValuesCommand ( WNode * node, XtPointer info_ptr );
+static void SetOnlyMatchingWidgets ( WNode * node, XtPointer info_ptr );
 
 /*	Function Name: Quit
  *	Description: This function prints a message to stdout.
@@ -117,7 +113,6 @@ FindWidget(w, client_data, call_data)
 Widget w;
 XtPointer client_data, call_data;
 {
-    void _FindWidget();
 
     _FindWidget(XtParent(w));	/* Use parent since it is a "real"
 				   widget not a rect_obj. */
@@ -812,8 +807,7 @@ XtPointer node_ptr;
     /*CreateGetValuesCommand(node, (XtPointer)&info);  Inserts widget */
 
     /* Insert widget */
-    _XEditResPut16(stream, 1);
-    _XEditResPut32(stream, node->id);
+    InsertWidgetFromNode(stream, node);
 
     SetCommand(node->tree_info->tree_widget, LocalGetValues, NULL);
 }

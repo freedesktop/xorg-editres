@@ -25,6 +25,7 @@ in this Software without prior written authorization from The Open Group.
  *
  * Author:  Chris D. Peterson, MIT X Consortium
  */
+/* $XFree86: xc/programs/editres/geometry.c,v 1.5 2001/12/14 20:00:43 dawes Exp $ */
 
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>
@@ -35,15 +36,20 @@ in this Software without prior written authorization from The Open Group.
 
 #include "editresP.h"
 
-extern void SetMessage(), SetCommand(), SetAndCenterTreeNode(), AddString();
-extern void GetAllStrings(), InsertWidgetFromNode();
-extern int HandleXErrors();
-extern WNode * FindNode();
-
-static WNode *FindWidgetFromWindow(), *FindWidgetFromWindowGivenNode();
-static void CreateFlashWidget(), FlashWidgets();
-static void AddToFlashList(), _AddToFlashList();
-static void FlashWidgetsOn(), FlashWidgetsOff(), FlashWidgetsCleanup();
+/*
+ * Local function definitions 
+ */
+static void AddToFlashList ( TreeInfo * tree_info, GetGeomInfo * geom_info, 
+			     char ** errors );
+static void _AddToFlashList ( TreeInfo * tree_info, char ** errors, 
+			      WNode * node, int x, int y, unsigned int width, 
+			      unsigned int height );
+static void CreateFlashWidget ( TreeInfo * tree_info, int x, int y, 
+				unsigned int width, unsigned int height );
+static void FlashWidgets ( TreeInfo * tree_info );
+static void FlashWidgetsOn ( XtPointer info_ptr, XtIntervalId * id );
+static void FlashWidgetsOff ( XtPointer info_ptr, XtIntervalId * id );
+static void FlashWidgetsCleanup ( XtPointer info_ptr, XtIntervalId * id );
 
 /*	Function Name: _FindWidget
  *	Description: Finds a widget in the tree and shows it to the user.
@@ -57,7 +63,7 @@ Widget w;
 {
     char msg[BUFSIZ];
     WNode * node;
-    Window win, GetClientWindow();
+    Window win;
     int x, y;			/* location of event in root coordinates. */
 
     sprintf(msg, res_labels[14]);
@@ -82,49 +88,6 @@ Widget w;
       res_labels[15]);
 }
 
-/*	Function Name: FindWidgetFromWindow
- *	Description: finds a widget in the current tree given its window id.
- *	Arguments: tree_info - information about this tree.
- *                 win - window to search for.
- *	Returns: node - the node corrosponding to this widget.
- */
-
-static WNode * 
-FindWidgetFromWindow(tree_info, win)
-TreeInfo * tree_info;
-Window win;
-{
-    if (tree_info == NULL)
-	return(NULL);
-
-    return(FindWidgetFromWindowGivenNode(tree_info->top_node, win));
-}
-
-/*	Function Name: FindWidgetFromWindowGivenNode
- *	Description: finds a widget in the current tree given its window id.
- *	Arguments: node - current node.
- *                 win - window to search for.
- *	Returns: node - the node corrosponding to this widget.
- */
-
-static WNode *
-FindWidgetFromWindowGivenNode(node, win)
-WNode * node;
-Window win;
-{
-    int i;
-    WNode * ret_node;
-
-    if (node->window == win)
-	return(node);
-
-    for (i = 0; i < node->num_children; i++) {
-	ret_node = FindWidgetFromWindowGivenNode(node->children[i], win);
-	if (ret_node != NULL)
-	    return(ret_node);
-    }
-    return(NULL);
-}
 
 /*	Function Name: DisplayChild
  *	Description: Displays the child node returned by the client
@@ -139,7 +102,6 @@ Event * event;
     FindChildEvent * find_event = (FindChildEvent *) event;
     WNode * node;
     char msg[BUFSIZ];
-    void _FlashActiveWidgets();
 
     node = FindNode(global_tree_info->top_node, find_event->widgets.ids,
 		    find_event->widgets.num_widgets);

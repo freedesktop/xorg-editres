@@ -26,6 +26,7 @@ other dealings in this Software without prior written authorization
 from The Open Group.
 
 */
+/* $XFree86: xc/programs/editres/comm.c,v 1.5 2001/12/14 20:00:42 dawes Exp $ */
 
 
 /*
@@ -42,6 +43,7 @@ from The Open Group.
 
 #include <stdio.h>
 #include <X11/Xmu/Error.h>
+#include <X11/Xmu/WinUtil.h>
 
 #include "editresP.h"
 
@@ -52,28 +54,22 @@ from The Open Group.
 static Atom atom_comm, atom_command, atom_resource_editor, atom_client_value;
 static Atom atom_editres_protocol;
 
-/*
- * external function definitions.
- */
-
-extern void RebuildMenusAndLabel();
-extern ResIdent GetNewIdent();
-extern void SetMessage(), BuildVisualTree(),DisplayChild();
-extern char * GetFormattedSetValuesError(), *HandleFlashWidget();
-extern char * HandleGetResources(),  *PrintSetValuesError();
-char * GetFailureMessage(), * ProtocolFailure();
-extern int HandleXErrors();
-extern void SetEntriesSensitive();
-
-static void TellUserAboutMessage(), BuildHeader(), FreeEvent();
-static Event * BuildEvent();
-static char * DispatchEvent();
-static void GetClientValue();
-static void ClientTimedOut(), LoseSelection(), SelectionDone();
-static Boolean ConvertCommand();
-
-
 extern Widget CM_entries[NUM_CM_ENTRIES], TM_entries[NUM_TM_ENTRIES];
+
+static void ClientTimedOut ( XtPointer data, XtIntervalId * id );
+static void TellUserAboutMessage ( Widget label, ResCommand command );
+static Boolean ConvertCommand ( Widget w, Atom * selection, Atom * target, 
+				Atom * type_ret, XtPointer *value_ret, 
+				unsigned long * length_ret, int * format_ret );
+static void SelectionDone ( Widget w, Atom *sel, Atom *targ );
+static void LoseSelection ( Widget w, Atom * sel );
+static void GetClientValue ( Widget w, XtPointer data, Atom *selection, 
+			     Atom *type, XtPointer value, 
+			     unsigned long *length, int * format );
+static void BuildHeader ( CurrentClient * client_data );
+static Event * BuildEvent ( ProtocolStream * stream );
+static void FreeEvent ( Event * event );
+static char * DispatchEvent ( Event * event );
 
 
 
