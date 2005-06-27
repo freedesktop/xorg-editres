@@ -45,13 +45,11 @@ dist_man_MANS = \
 
 appdefaultdir = $(sysconfdir)/X11/app-defaults
 
-EXTRA_DIST = \
-        Edit-col.ad \
-        Editres.ad
-
 APPDEFAULTFILES = \
         Edit-col \
         Editres
+
+EXTRA_DIST = $(foreach X, $(APPDEFAULTFILES), $(X).ad)
 
 $(APPDEFAULTFILES): %: %.ad
 	cp $< $@
