@@ -51,7 +51,9 @@ APPDEFAULTFILES = \
 
 EXTRA_DIST = $(foreach X, $(APPDEFAULTFILES), $(X).ad)
 
-$(APPDEFAULTFILES): %: %.ad
+SUFFIXES = .ad 
+
+.ad:
 	cp $< $@
 
 appdefault_DATA = $(APPDEFAULTFILES)
