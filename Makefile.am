@@ -21,8 +21,8 @@
 
 bin_PROGRAMS = editres
 
-editres_CFLAGS = $(DEP_CFLAGS)
-editres_LDADD = $(DEP_LIBS)
+editres_CFLAGS = $(EDITRES_CFLAGS)
+editres_LDADD = $(EDITRES_LIBS)
 
 editres_SOURCES =	\
         actions.c \
