@@ -49,7 +49,7 @@ APPDEFAULTFILES = \
         Edit-col \
         Editres
 
-EXTRA_DIST = $(foreach X, $(APPDEFAULTFILES), $(X).ad)
+EXTRA_DIST = $(APPDEFAULTFILES:%=%.ad)
 
 SUFFIXES = .ad 
 
