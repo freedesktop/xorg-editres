@@ -22,7 +22,7 @@ dnl
 dnl Process this file with autoconf to create configure.
 
 AC_PREREQ([2.57])
-AC_INIT(editres,[7.0], [xorg@freedestkop.org],editres)
+AC_INIT(editres,[0.99.0], [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],editres)
 AM_INIT_AUTOMAKE([dist-bzip2])
 AM_MAINTAINER_MODE
 
@@ -39,5 +39,7 @@ EDITRES_CFLAGS="$DEP_CFLAGS $XAW_CFLAGS"
 EDITRES_LIBS="$DEP_LIBS $XAW_LIBS"
 AC_SUBST(EDITRES_CFLAGS)
 AC_SUBST(EDITRES_LIBS)
+
+XORG_RELEASE_VERSION
 
 AC_OUTPUT([Makefile])
