@@ -38,7 +38,7 @@ editres_SOURCES =	\
         widgets.c \
         wtree.c
 
-dist_man_MANS = \
+dist_man1_MANS = \
         editres.man
 
 # App default files  (*.ad)
