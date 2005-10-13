@@ -1,3 +1,4 @@
+# $Id$
 # 
 #  Copyright 2005  Red Hat, Inc.
 # 
@@ -46,7 +47,7 @@ dist_man1_MANS = \
 appdefaultdir = $(sysconfdir)/X11/app-defaults
 
 APPDEFAULTFILES = \
-        Edit-col \
+        Editres-color \
         Editres
 
 EXTRA_DIST = $(APPDEFAULTFILES:%=%.ad)
