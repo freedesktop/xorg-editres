@@ -45,8 +45,8 @@ appman_PRE = \
 appdefaultdir = @appdefaultdir@
 
 APPDEFAULTFILES = \
-        Editres-color \
-        Editres
+        app-defaults/Editres-color \
+        app-defaults/Editres
 
 EXTRA_DIST = $(APPDEFAULTFILES:%=%.ad) ChangeLog autogen.sh
 
