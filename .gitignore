@@ -20,3 +20,7 @@ install-sh
 missing
 stamp-h1
 *~
+*.o
+editres-*-.tar.*
+ChangeLog
+tags
