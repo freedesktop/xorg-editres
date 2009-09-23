@@ -21,7 +21,7 @@
 
 bin_PROGRAMS = editres
 
-AM_CFLAGS = $(EDITRES_CFLAGS)
+AM_CFLAGS = $(CWARNFLAGS) $(EDITRES_CFLAGS)
 editres_LDADD = $(EDITRES_LIBS)
 
 editres_SOURCES =	\
