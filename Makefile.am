@@ -50,7 +50,7 @@ dist_appdefault_DATA = \
         app-defaults/Editres-color \
         app-defaults/Editres
 
-EXTRA_DIST = ChangeLog autogen.sh
+EXTRA_DIST = ChangeLog
 
 MAINTAINERCLEANFILES=ChangeLog
 
