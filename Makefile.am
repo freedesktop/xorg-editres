@@ -50,9 +50,7 @@ dist_appdefault_DATA = \
         app-defaults/Editres-color \
         app-defaults/Editres
 
-EXTRA_DIST = ChangeLog
 
-MAINTAINERCLEANFILES=ChangeLog
 
 .PHONY: ChangeLog
 
@@ -65,7 +63,7 @@ appmandir = $(APP_MAN_DIR)
 
 appman_DATA = $(appman_PRE:man=@APP_MAN_SUFFIX@)
 
-EXTRA_DIST += $(appman_PRE)
+EXTRA_DIST = $(appman_PRE)
 CLEANFILES = $(appman_DATA)
 
 SED = sed
