@@ -37,14 +37,8 @@ AM_CONFIG_HEADER(config.h)
 AC_PROG_CC
 AC_PROG_INSTALL
 
-
-# Checks for pkg-config packages
-PKG_CHECK_MODULES(XAW, xaw7)
-PKG_CHECK_MODULES(EDITRES, x11 xt xmu)
-EDITRES_CFLAGS="$EDITRES_CFLAGS $XAW_CFLAGS"
-EDITRES_LIBS="$EDITRES_LIBS $XAW_LIBS"
-AC_SUBST(EDITRES_CFLAGS)
-AC_SUBST(EDITRES_LIBS)
+# Obtain compiler/linker options from depedencies
+PKG_CHECK_MODULES(EDITRES, xaw7 x11 xt xmu)
 
 PKG_CHECK_MODULES(APPDEFS, xt)
 xt_appdefaultdir=`$PKG_CONFIG --variable=appdefaultdir xt`
