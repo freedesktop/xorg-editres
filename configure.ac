@@ -34,9 +34,6 @@ XORG_DEFAULT_OPTIONS
 
 AM_CONFIG_HEADER(config.h)
 
-AC_PROG_CC
-AC_PROG_INSTALL
-
 # Obtain compiler/linker options from depedencies
 PKG_CHECK_MODULES(EDITRES, xaw7 x11 xt xmu)
 
