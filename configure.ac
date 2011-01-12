@@ -33,7 +33,7 @@ m4_ifndef([XORG_MACROS_VERSION],
 XORG_MACROS_VERSION(1.8)
 XORG_DEFAULT_OPTIONS
 
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS([config.h])
 
 # Obtain compiler/linker options from depedencies
 PKG_CHECK_MODULES(EDITRES, xaw7 x11 xt xmu)
