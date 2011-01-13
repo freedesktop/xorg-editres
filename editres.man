@@ -413,7 +413,7 @@ stored in the RESOURCE_MANAGER property.
 .I __apploaddir__/Editres
 specifies required resources
 .SH SEE ALSO
-X(__miscmansuffix__), xrdb(1), Athena Widget Set
+X(__miscmansuffix__), xrdb(__appmansuffix__), Athena Widget Set
 .SH RESTRICTIONS
 This is a prototype, there are lots of nifty features I would love to add,
 but I hope this will give you some ideas about what a resource editor
