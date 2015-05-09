@@ -40,9 +40,9 @@ in this Software without prior written authorization from The Open Group.
 #define PROTOCOL_VERSION_ONE_POINT_ONE  5 /* version 1.1 */
 #define ONE_POINT_ONE_STRING "1.1"
 #define PROTOCOL_VERSION_ONE_POINT_ZERO 4 /* version 1.0 */
-#define ONE_POINT_ZERO_STRING "1.0" ONE_POINT_ONE_STRING 
+#define ONE_POINT_ZERO_STRING "1.0" ONE_POINT_ONE_STRING
 
-#define CURRENT_PROTOCOL_VERSION PROTOCOL_VERSION_ONE_POINT_ONE 
+#define CURRENT_PROTOCOL_VERSION PROTOCOL_VERSION_ONE_POINT_ONE
 #define CURRENT_PROTOCOL_VERSION_STRING ONE_POINT_ONE_STRING
 
 #define FLASH_TIME  1000	/* Default flash time in microseconds */
@@ -71,19 +71,19 @@ in this Software without prior written authorization from The Open Group.
 #define NODE_INFO ((XContext) 42)
 
 /*
- * Error codes for X Server errors. 
+ * Error codes for X Server errors.
  */
 
 #define NO_ERROR 0
 #define NO_WINDOW 1
 
-typedef enum {LocalSendWidgetTree, LocalSetValues, LocalFindChild, 
+typedef enum {LocalSendWidgetTree, LocalSetValues, LocalFindChild,
 	      LocalFlashWidget, LocalGetGeometry, LocalGetResources,
               LocalGetValues} ResCommand;
 
 typedef enum {ClassLabel, NameLabel, IDLabel, WindowLabel,
 	      ToggleLabel} LabelTypes;
-typedef enum {SelectWidget, SelectAll, SelectNone, SelectInvert, SelectParent, 
+typedef enum {SelectWidget, SelectAll, SelectNone, SelectInvert, SelectParent,
 	      SelectChildren,  SelectDescendants, SelectAncestors} SelectTypes;
 
 typedef struct _NameInfo {
@@ -97,16 +97,16 @@ typedef struct _ResourceBoxInfo {
     Widget res_label;		/* The label containing current resoruce. */
     Widget shell;		/* Shell widget containing resource box. */
     Widget norm_list;		/* The List widget for the normal list. */
-    Widget cons_list;		/* The List widget for the 
+    Widget cons_list;		/* The List widget for the
 				   Constriaint Resources */
     NameInfo * name_info;	/* The info about the widgets for each
 				   name and class in the instance heirarchy. */
 } ResourceBoxInfo;
-    
+
 typedef struct _WidgetResourceInfo {
     char * name, * class, *type; /* Name, Class and Type of each resource. */
 } WidgetResourceInfo;
-    
+
 typedef struct _WidgetResources {
     int num_normal, num_constraint;
     WidgetResourceInfo *normal, *constraint;
@@ -196,7 +196,7 @@ typedef struct _ApplyResourcesInfo {
     ProtocolStream * stream;
     XrmDatabase database;
 } ApplyResourcesInfo;
-    
+
 /*
  * Information needed to get a resource string from a widget.
  */
@@ -236,7 +236,7 @@ typedef struct _SetValuesInfo {
     WidgetInfo widgets;
     char * message;
 } SetValuesInfo;
-    
+
 typedef struct _SetValuesEvent {
     EditresCommand type;
     unsigned short num_entries;
@@ -247,7 +247,7 @@ typedef struct _GetValuesInfo {
     WidgetInfo widgets;
     char * value;
 } GetValuesInfo;
-    
+
 typedef struct _GetValuesEvent {
     EditresCommand type;
     unsigned short num_entries;
@@ -303,7 +303,7 @@ typedef union _Event {
     FindChildEvent find_child_event;
     GetValuesEvent get_values_event;
 } Event;
-    
+
 /*
  * number of application resource labels.
  */
@@ -311,7 +311,7 @@ typedef union _Event {
 #define NUM_RES_LABELS 37
 
 /*
- * Global variables. 
+ * Global variables.
  */
 extern int global_effective_protocol_version;
 extern char* global_effective_toolkit;

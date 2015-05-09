@@ -32,7 +32,7 @@ in this Software without prior written authorization from The Open Group.
 #include <stdio.h>
 
 #include <X11/Xaw/AsciiText.h>
-#include <X11/Xaw/Cardinals.h>	
+#include <X11/Xaw/Cardinals.h>
 #include <X11/Xfuncs.h>
 #include <X11/Xos.h>
 #include "editresP.h"
@@ -55,18 +55,18 @@ PrintSetValuesError(Event *event)
     SetValuesEvent * sv_event = (SetValuesEvent *) event;
     char buf[BUFSIZ];
 
-    if (sv_event->num_entries == 0) 
+    if (sv_event->num_entries == 0)
 	return(XtNewString("SetValues was Successful."));
 
     for (i = 0 ; i < (int)sv_event->num_entries ; i++) {
 	node = FindNode(global_tree_info->top_node,
-			sv_event->info[i].widgets.ids, 
+			sv_event->info[i].widgets.ids,
 			sv_event->info[i].widgets.num_widgets);
 
 	if (node == NULL) {
 	    snprintf(buf, sizeof(buf),
                      "Editres Internal Error: Unable to FindNode.\n");
-	    AddString(&errors, buf); 
+	    AddString(&errors, buf);
 	    continue;
 	}
 
@@ -109,7 +109,7 @@ GetResourceValueForSetValues(WNode *node, unsigned short *size)
     ptr = XtMalloc(sizeof(char) * value.size);
     memmove( ptr, value.addr, value.size);
     XrmDestroyDatabase(db);
-    
+
     *size = (unsigned short) value.size;
     return(ptr);
 }
