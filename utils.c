@@ -155,7 +155,7 @@ AddString(char ** str, char *add)
 WNode *
 FindNode(WNode *top_node, unsigned long *ids, Cardinal number)
 {
-    int i, j;
+    Cardinal i, j;
     WNode *node;
 
     if (top_node == NULL)
@@ -206,7 +206,7 @@ FindWidgetFromWindow(TreeInfo *tree_info, Window win)
 static WNode *
 FindWidgetFromWindowGivenNode(WNode *node, Window win)
 {
-    int i;
+    Cardinal i;
     WNode * ret_node;
 
     if (node->window == win)
@@ -780,7 +780,7 @@ void
 ExecuteOverAllNodes(WNode *top_node, void (*func)(WNode *, XtPointer),
 		    XtPointer data)
 {
-    int i;
+    Cardinal i;
 
     (*func)(top_node, data);
 

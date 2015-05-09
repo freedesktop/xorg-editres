@@ -100,7 +100,7 @@ BuildVisualTree(Widget tree_parent, Event *event)
 void
 AddTreeNode(Widget tree, WNode *top)
 {
-    int i;
+    Cardinal i;
     Arg args[1];
     Cardinal num_args = 0;
     char msg[BUFSIZ];
@@ -186,7 +186,7 @@ RemoveNodeFromActiveList(WNode *node)
 {
     TreeInfo * info = node->tree_info;
     Boolean found_node = FALSE;
-    int i;
+    Cardinal i;
 
     if (!IsActiveNode(node))	/* This node is not active. */
 	return;
@@ -211,7 +211,7 @@ static Boolean
 IsActiveNode(WNode *node)
 {
     TreeInfo * info = node->tree_info;
-    int i;
+    Cardinal i;
 
     for (i = 0; i < info->num_nodes; i++) 
 	if (info->active_nodes[i] == node)
@@ -230,7 +230,7 @@ TreeInfo *
 CreateTree(Event *event)
 {
     SendWidgetTreeEvent * send_event = (SendWidgetTreeEvent *) event;
-    int i;
+    unsigned short i;
 
     TreeInfo * tree_info;
 
@@ -243,7 +243,7 @@ CreateTree(Event *event)
     tree_info->flash_widgets = NULL;
     tree_info->num_flash_widgets = tree_info->alloc_flash_widgets = 0;
 
-    for ( i = 0; i < (int)send_event->num_entries; i++)
+    for ( i = 0; i < send_event->num_entries; i++)
 	AddNode(&(tree_info->top_node), (send_event->info + i), tree_info);
 
     return(tree_info);
@@ -258,7 +258,7 @@ CreateTree(Event *event)
 void
 PrintNodes(WNode *top)
 {
-    int i;
+    Cardinal i;
 
     if (top->parent == NULL) 
 	printf("Top of Tree, Name: %10s, ID: %10ld, Class: %10s\n", 
@@ -309,7 +309,7 @@ _TreeSelect(TreeInfo *tree_info, SelectTypes type)
 {
     WNode ** active_nodes;
     Cardinal num_active_nodes;
-    int i;
+    Cardinal i;
 
     if (tree_info == NULL) {
 	SetMessage(global_screen_data.info_label,
@@ -353,7 +353,7 @@ _TreeSelect(TreeInfo *tree_info, SelectTypes type)
 void
 _TreeSelectNode(WNode *node, SelectTypes type, Boolean recurse)
 {
-    int i;
+    Cardinal i;
     Arg args[1];
     Boolean state;
 
@@ -398,7 +398,7 @@ _TreeSelectNode(WNode *node, SelectTypes type, Boolean recurse)
 void
 _TreeRelabelNode(WNode *node, LabelTypes type, Boolean recurse)
 {
-    int i;
+    Cardinal i;
     Arg args[1];
     char buf[30];
     char *label;
@@ -459,7 +459,7 @@ void
 _TreeActivateNode(WNode* node, SelectTypes type)
 {
     Arg args[1];
-    int i;
+    Cardinal i;
 
     XtSetArg(args[0], XtNstate, TRUE);
 
@@ -597,7 +597,7 @@ static WNode **
 CopyActiveNodes(TreeInfo *tree_info)
 {
     WNode ** list;
-    int i;
+    Cardinal i;
 
     if ( (tree_info == NULL) || (tree_info->num_nodes == 0))
 	return(NULL);
@@ -674,9 +674,9 @@ SetAndCenterTreeNode(WNode *node)
  */
 
 void
-PerformTreeToFileDump(WNode *node, int num_tabs, FILE *fp)
+PerformTreeToFileDump(WNode *node, Cardinal num_tabs, FILE *fp)
 {
-    int i;
+    Cardinal i;
 
     for (i = 0; i < num_tabs; i++) 
 	fprintf(fp, "\t");

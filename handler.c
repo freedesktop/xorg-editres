@@ -431,7 +431,7 @@ SetResourceString(Widget w, XtPointer node_ptr, XtPointer junk)
     char * temp, buf[BUFSIZ * 10];	/* here's hoping it's big enough. */
     NameInfo * name_node = res_box->name_info;
     Arg args[1];
-    int len;
+    Cardinal len;
 
     if ((w != NULL) && XtIsSubclass(w, toggleWidgetClass)) {
 	/*

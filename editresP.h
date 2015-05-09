@@ -393,7 +393,7 @@ extern void LayoutTree ( Widget tree );
 extern int main ( int argc, char **argv );
 extern void ModifySVEntry ( Widget w, XEvent *event, String * params, Cardinal * num_params );
 extern void PannerCallback ( Widget w, XtPointer closure, XtPointer report_ptr );
-extern void PerformTreeToFileDump ( WNode * node, int num_tabs, FILE * fp );
+extern void PerformTreeToFileDump ( WNode * node, Cardinal num_tabs, FILE * fp );
 extern void PopdownResBox ( Widget w, XtPointer shell_ptr, XtPointer junk );
 extern void PopupCentered ( XEvent * event, Widget w, XtGrabKind mode );
 extern void PopupSetValues ( Widget parent, XEvent * event );

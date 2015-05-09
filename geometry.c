@@ -127,7 +127,7 @@ DisplayChild(Event *event)
 void
 _FlashActiveWidgets(TreeInfo *tree_info)
 {
-    int i;
+    Cardinal i;
     ProtocolStream * stream = &(global_client.stream);
 
     if (tree_info == NULL) {
@@ -374,7 +374,7 @@ static void
 FlashWidgetsOn(XtPointer info_ptr, XtIntervalId *id)
 {
 
-    int i;
+    Cardinal i;
     TreeInfo * tree_info = (TreeInfo *) info_ptr;
     
     for (i = 0; i < tree_info->num_flash_widgets; i++) {
@@ -395,7 +395,7 @@ FlashWidgetsOn(XtPointer info_ptr, XtIntervalId *id)
 static void
 FlashWidgetsOff(XtPointer info_ptr, XtIntervalId *id)
 {
-    int i;
+    Cardinal i;
     TreeInfo * tree_info = (TreeInfo *) info_ptr;
     
     for (i = 0; i < tree_info->num_flash_widgets; i++)
@@ -413,7 +413,7 @@ FlashWidgetsOff(XtPointer info_ptr, XtIntervalId *id)
 static void
 FlashWidgetsCleanup(XtPointer info_ptr, XtIntervalId *id)
 {
-    int i;
+    Cardinal i;
     TreeInfo * tree_info = (TreeInfo *) info_ptr;
 
 /*

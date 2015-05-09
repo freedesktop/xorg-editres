@@ -279,7 +279,7 @@ CheckAndFindEntry(String action_name, String *params, Cardinal num_params,
 		  struct ActionValues *table, Cardinal num_table, int *type)
 {
     char buf[BUFSIZ];
-    int i;
+    Cardinal i;
 
     if (num_params != 1) {
 	snprintf(buf, sizeof(buf), res_labels[2], action_name);
