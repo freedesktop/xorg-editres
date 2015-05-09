@@ -127,7 +127,7 @@ ModifySVEntry(Widget w, XEvent *event, String *params, Cardinal *num_params)
 	old = global_screen_data.res_text;
 	break;
     default:
-	sprintf(msg, res_labels[22]);
+	snprintf(msg, sizeof(msg), res_labels[22]);
 	SetMessage(global_screen_data.info_label, msg);
 	return;
     }

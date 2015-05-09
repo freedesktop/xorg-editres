@@ -63,7 +63,7 @@ _FindWidget(Widget w)
     Window win;
     int x, y;			/* location of event in root coordinates. */
 
-    sprintf(msg, res_labels[14]);
+    snprintf(msg, sizeof(msg), res_labels[14]);
 
     SetMessage(global_screen_data.info_label, msg);
 
@@ -103,7 +103,7 @@ DisplayChild(Event *event)
 		    find_event->widgets.num_widgets);
 
     if (node == NULL) {
-	sprintf(msg, res_labels[13]);
+	snprintf(msg, sizeof(msg), res_labels[13]);
 	SetMessage(global_screen_data.info_label, msg);
 	return;	
     }
@@ -112,7 +112,7 @@ DisplayChild(Event *event)
 
     node = node->tree_info->top_node;
 
-    sprintf(msg, res_labels[12], node->name, node->class);
+    snprintf(msg, sizeof(msg), res_labels[12], node->name, node->class);
     SetMessage(global_screen_data.info_label, msg);
 
     _FlashActiveWidgets(global_tree_info);
@@ -193,7 +193,8 @@ AddToFlashList(TreeInfo *tree_info, GetGeomInfo *geom_info, char **errors)
 		    geom_info->widgets.ids, geom_info->widgets.num_widgets);
 
     if (node == NULL) {
-	sprintf(buf, "Editres Internal Error: Unable to FindNode.\n");
+	snprintf(buf, sizeof(buf),
+                 "Editres Internal Error: Unable to FindNode.\n");
 	AddString(errors, buf); 
 	return;	
     }
@@ -204,7 +205,7 @@ AddToFlashList(TreeInfo *tree_info, GetGeomInfo *geom_info, char **errors)
     }
 
     if (!geom_info->visable) {
-	sprintf(buf, "%s(0x%lx) - This widget is not mapped\n",
+	snprintf(buf, sizeof(buf), "%s(0x%lx) - This widget is not mapped\n",
 		node->name, node->id);
 	AddString(errors, buf); 
 	return;
@@ -240,11 +241,13 @@ _AddToFlashList(TreeInfo *tree_info, char **errors, WNode *node,
 	char buf[BUFSIZ];
 
 	if (node->window == EDITRES_IS_OBJECT) 
-	    sprintf(buf, "%s(0x%lx) - This object's parent is unrealized\n", 
-		    node->name, node->id);	    
+	    snprintf(buf, sizeof(buf),
+                     "%s(0x%lx) - This object's parent is unrealized\n",
+                     node->name, node->id);
 	else
-	    sprintf(buf, "%s(0x%lx) - This widget is unrealized\n", 
-		    node->name, node->id);
+	    snprintf(buf, sizeof(buf),
+                     "%s(0x%lx) - This widget is unrealized\n",
+                     node->name, node->id);
 
 	AddString(errors, buf); 
 	return;
@@ -261,8 +264,9 @@ _AddToFlashList(TreeInfo *tree_info, char **errors, WNode *node,
     if (global_error_code == NO_WINDOW) {
 	char buf[BUFSIZ];
 
-	sprintf(buf, "%s(0x%lx) - This widget's window no longer exists.\n", 
-		node->name, node->id);
+	snprintf(buf, sizeof(buf),
+                 "%s(0x%lx) - This widget's window no longer exists.\n",
+                 node->name, node->id);
 	AddString(errors, buf); 
 	return;
     }   
@@ -270,8 +274,8 @@ _AddToFlashList(TreeInfo *tree_info, char **errors, WNode *node,
     if (attrs.map_state != IsViewable) {
 	char buf[BUFSIZ];
 
-	sprintf(buf, "%s(0x%lx) - This widget is not mapped.\n",
-		node->name, node->id);
+	snprintf(buf, sizeof(buf), "%s(0x%lx) - This widget is not mapped.\n",
+                 node->name, node->id);
 	AddString(errors, buf); 
 	return;
     }   

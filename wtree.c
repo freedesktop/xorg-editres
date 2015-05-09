@@ -84,7 +84,7 @@ BuildVisualTree(Widget tree_parent, Event *event)
 
     XtManageChild(global_tree_info->tree_widget);
 
-    sprintf(msg, res_labels[11], top->name, top->class);
+    snprintf(msg, sizeof(msg), res_labels[11], top->name, top->class);
     SetMessage(global_screen_data.info_label, msg);
 }
 
@@ -107,8 +107,8 @@ AddTreeNode(Widget tree, WNode *top)
 
     if (top->parent != NULL) {
 	if (top->parent->widget == NULL) {
-	    sprintf( msg, res_labels[28],
-		    top->name, top->parent->name, "not been created yet");
+	    snprintf(msg, sizeof(msg), res_labels[28],
+                     top->name, top->parent->name, "not been created yet");
 	    SetMessage(global_screen_data.info_label, msg);
 	}
 	XtSetArg(args[num_args], XtNtreeParent, top->parent->widget);
@@ -120,7 +120,7 @@ AddTreeNode(Widget tree, WNode *top)
 
     if (XSaveContext(XtDisplay(top->widget), (Window) top->widget, 
 		     NODE_INFO, (XPointer) top) != 0) {
-	sprintf( msg, res_labels[29], top->name);
+	snprintf(msg, sizeof(msg), res_labels[29], top->name);
 	SetMessage(global_screen_data.info_label, msg);
     }	
 
@@ -411,7 +411,7 @@ _TreeRelabelNode(WNode *node, LabelTypes type, Boolean recurse)
 	XtSetArg(args[0], XtNlabel, node->name);
 	break;
     case IDLabel:
-	sprintf(buf, "id: 0x%lx", node->id);
+	snprintf(buf, sizeof(buf), "id: 0x%lx", node->id);
 	XtSetArg(args[0], XtNlabel, buf);
 	break;
     case WindowLabel:
@@ -420,7 +420,7 @@ _TreeRelabelNode(WNode *node, LabelTypes type, Boolean recurse)
 	else if (node->window == EDITRES_IS_OBJECT) 
 	    strcpy(buf, "non windowed object");	    
 	else
-	    sprintf(buf, "win: 0x%lx", node->window);
+	    snprintf(buf, sizeof(buf), "win: 0x%lx", node->window);
 	    
 	XtSetArg(args[0], XtNlabel, buf);
 	break;

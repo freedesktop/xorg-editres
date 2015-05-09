@@ -271,7 +271,7 @@ _DumpTreeToFile(Widget w, XtPointer tree_ptr, XtPointer filename)
     if ( (fp = fopen((char *)filename, "w")) == NULL ) {
 	char buf[BUFSIZ];
 
-	sprintf(buf, res_labels[24], (char *)filename);
+	snprintf(buf, sizeof(buf), res_labels[24], (char *)filename);
 	SetMessage(global_screen_data.info_label, buf);
 	return;
     }
@@ -518,7 +518,7 @@ HandleGetResources(Event *event)
 			get_event->info[i].widgets.num_widgets);
 
 	if (node == NULL) {
-	    sprintf(buf, res_labels[16]);
+	    snprintf(buf, sizeof(buf), res_labels[16]);
 	    AddString(&errors, buf); 
 	    continue;	
 	}
@@ -629,8 +629,8 @@ ParseResources(GetResourcesInfo *info, char **error)
 	default:
 	    {
 		char buf[BUFSIZ];
-		sprintf(buf, "Unknown resource type %d\n", 
-			info->res_info[i].res_type);
+		snprintf(buf, sizeof(buf), "Unknown resource type %d\n",
+                         info->res_info[i].res_type);
 		AddString(error, buf);
 	    }
 	    break;
@@ -863,8 +863,8 @@ ProtocolFailure(ProtocolStream *stream)
     default: old_version_string = "1.0";
     }
     
-    sprintf(buf, res_labels[36], 
-	    CURRENT_PROTOCOL_VERSION_STRING, old_version_string);
+    snprintf(buf, sizeof(buf), res_labels[36],
+             CURRENT_PROTOCOL_VERSION_STRING, old_version_string);
     return(XtNewString(buf));
 }
 	

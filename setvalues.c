@@ -64,13 +64,14 @@ PrintSetValuesError(Event *event)
 			sv_event->info[i].widgets.num_widgets);
 
 	if (node == NULL) {
-	    sprintf(buf, "Editres Internal Error: Unable to FindNode.\n");
+	    snprintf(buf, sizeof(buf),
+                     "Editres Internal Error: Unable to FindNode.\n");
 	    AddString(&errors, buf); 
 	    continue;
 	}
 
-	sprintf(buf, "%s(0x%lx) - %s\n", node->name, node->id,
-		sv_event->info[i].message);
+	snprintf(buf, sizeof(buf), "%s(0x%lx) - %s\n", node->name, node->id,
+                 sv_event->info[i].message);
 	AddString(&errors, buf);
     }
     return(errors);

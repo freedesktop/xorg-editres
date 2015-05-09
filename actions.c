@@ -188,8 +188,7 @@ PopdownFileDialogAction(Widget w, XEvent *event,
     Boolean val;
 
     if (*num_params != 1) {
-	sprintf(buf, res_labels[2], 
-		"PopdownFileDialog");
+	snprintf(buf, sizeof(buf), res_labels[2], "PopdownFileDialog");
 
 	SetMessage(global_screen_data.info_label, buf);
 	return;
@@ -202,8 +201,7 @@ PopdownFileDialogAction(Widget w, XEvent *event,
     else if (streq(buf, "okay"))
 	val = TRUE;
     else {
-	sprintf(buf, res_labels[1],
-		"PopdownFileDialog");
+	snprintf(buf, sizeof(buf), res_labels[1], "PopdownFileDialog");
 
 	SetMessage(global_screen_data.info_label, buf);
 	return;
@@ -284,8 +282,7 @@ CheckAndFindEntry(String action_name, String *params, Cardinal num_params,
     int i;
 
     if (num_params != 1) {
-	sprintf(buf, res_labels[2], 
-		action_name);
+	snprintf(buf, sizeof(buf), res_labels[2], action_name);
 	SetMessage(global_screen_data.info_label, buf);
 	return(FALSE);
     }
@@ -297,8 +294,7 @@ CheckAndFindEntry(String action_name, String *params, Cardinal num_params,
 	    return(TRUE);
 	}
     
-    sprintf(buf,res_labels[3], 
-	    action_name);
+    snprintf(buf, sizeof(buf), res_labels[3], action_name);
 
     for (i = 0; i < num_table; ) {
 	strcat(buf, table[i++].name);

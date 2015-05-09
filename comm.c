@@ -90,8 +90,7 @@ ClientTimedOut(XtPointer data, XtIntervalId *id)
   XtDisownSelection(w, global_client.atom, 
 		    XtLastTimestampProcessed(XtDisplay(w)));
   
-  sprintf(msg, res_labels[4],
-	  "the Editres Protocol.");
+  snprintf(msg, sizeof(msg), res_labels[4], "the Editres Protocol.");
   SetMessage(global_screen_data.info_label, msg);
 }
 
@@ -226,13 +225,12 @@ SetCommand(Widget w, ResCommand command, char *msg)
   XSync(dpy, FALSE);
   XSetErrorHandler(global_old_error_handler);
   if (global_error_code == NO_WINDOW) {
-    char error_buf[BUFSIZ];
+    char error_buf[BUFSIZ] =
+        "The communication window with the"
+        " application is no longer available\n"
+        "Please select a new widget tree.";
     
     global_error_code = NO_ERROR;	/* Reset Error code. */
-    sprintf(error_buf, "The communication window with%s%s.",
-	    " application is no longer available\n",
-	    "Please select a new widget tree");
-    
     global_client.window = None;
     SetCommand(w, LocalSendWidgetTree, error_buf);
     return;
@@ -280,7 +278,7 @@ TellUserAboutMessage(Widget label, ResCommand command)
 	break;
     }
 
-    sprintf(msg, res_labels[8], str);
+    snprintf(msg, sizeof(msg), res_labels[8], str);
     SetMessage(label, msg);
 }
 
@@ -420,7 +418,7 @@ GetClientValue(Widget w, XtPointer data, Atom *selection, Atom *type,
 	    FreeEvent(event);
 	}
 	else {
-	    sprintf(msg, "Unable to unpack protocol request.");
+	    snprintf(msg, sizeof(msg), "Unable to unpack protocol request.");
 	    error_str = XtNewString(msg);
 	}
 	break;
@@ -438,7 +436,7 @@ GetClientValue(Widget w, XtPointer data, Atom *selection, Atom *type,
 	SetCommand(w, LocalSendWidgetTree, NULL);
 	break;
     default:
-	sprintf(msg, res_labels[11], (int) error_code);
+	snprintf(msg, sizeof(msg), res_labels[11], (int) error_code);
 	SetMessage(global_screen_data.info_label, msg);
 	break;
     }
@@ -450,7 +448,7 @@ GetClientValue(Widget w, XtPointer data, Atom *selection, Atom *type,
 	    return;
 	
 	top = global_tree_info->top_node;
-	sprintf(msg, res_labels[12], top->name, top->class);
+	snprintf(msg, sizeof(msg), res_labels[12], top->name, top->class);
 	SetMessage(global_screen_data.info_label, msg);
 	return;
     }
@@ -893,8 +891,8 @@ DispatchEvent(Event *event)
     default:
         {
 	    char msg[BUFSIZ];
-	    sprintf(msg, "Internal error: Unknown command %d.", 
-		    global_client.command);
+	    snprintf(msg, sizeof(msg), "Internal error: Unknown command %d.",
+                     global_client.command);
 	    error = XtNewString(msg);
 	}
 	break;

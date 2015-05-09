@@ -564,8 +564,9 @@ _AppendResourceString(Widget w, XtPointer res_box_ptr, XtPointer filename_ptr)
     }
 
     if ((fp = fopen(global_resources.save_resources_file, "a+")) == NULL) {
-	sprintf(buf, "Unable to open this file for writing, would %s",
-		"you like To try again?");
+	snprintf(buf, sizeof(buf), "%s",
+                 "Unable to open this file for writing, would "
+                 "you like To try again?");
 	_PopupFileDialog(global_toplevel ,buf,
 			global_resources.save_resources_file,
 			_AppendResourceString, res_box_ptr);
