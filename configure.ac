@@ -38,7 +38,7 @@ XORG_MACROS_VERSION(1.8)
 XORG_DEFAULT_OPTIONS
 
 # Obtain compiler/linker options from depedencies
-PKG_CHECK_MODULES(EDITRES, [xaw7 x11 xt >= 1.0.99.1 xmu])
+PKG_CHECK_MODULES(EDITRES, [xaw7 x11 xt >= 1.0.99.1 xmu xproto >= 7.0.17])
 
 PKG_CHECK_MODULES(APPDEFS, xt)
 xt_appdefaultdir=`$PKG_CONFIG --variable=appdefaultdir xt`

@@ -61,7 +61,7 @@ Widget global_toplevel;
 AppResources global_resources;
 
 
-static void Syntax ( XtAppContext app_con, char *call );
+static void Syntax ( XtAppContext app_con, char *call ) _X_NORETURN;
 
 static String fallback_resources[] = {
     NULL,

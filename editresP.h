@@ -28,6 +28,7 @@ in this Software without prior written authorization from The Open Group.
 
 #include <X11/Xmu/EditresP.h>
 #include <X11/Xresource.h>
+#include <X11/Xfuncproto.h>
 
 #define DEBUG
 
@@ -403,7 +404,7 @@ extern void PrintNodes ( WNode * top );
 extern char * PrintSetValuesError ( Event * event );
 extern char * ProtocolFailure ( ProtocolStream * stream );
 extern XrmQuarkList Quarkify ( char ** list, char * ptr );
-extern void Quit ( Widget w, XtPointer client_data, XtPointer call_data );
+extern void Quit ( Widget w, XtPointer client_data, XtPointer call_data ) _X_NORETURN;
 extern void RebuildMenusAndLabel ( String toolkit );
 extern void ResourceListCallback ( Widget list, XtPointer node_ptr, XtPointer junk );
 extern void SaveResource ( Widget w, XtPointer res_box_ptr, XtPointer junk );
