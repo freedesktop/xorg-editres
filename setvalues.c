@@ -99,8 +99,7 @@ GetResourceValueForSetValues(WNode *node, unsigned short *size)
      * the resource database.
      */
 
-    temp = XtMalloc(sizeof(char) * (strlen(ptr) + strlen(RESOURCE_NAME) + 2));
-    sprintf(temp, "%s:%s", RESOURCE_NAME, ptr);
+    XtAsprintf(&temp, "%s:%s", RESOURCE_NAME, ptr);
     XrmPutLineResource(&db, temp);
     XtFree(temp);
 
